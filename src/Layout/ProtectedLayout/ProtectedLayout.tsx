@@ -8,22 +8,21 @@ export default function ProtectedLayout() {
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useAuthState();
 
-  const getUser = async () => {
-    try {
-      const res = await refresh();
-      setUser(res.data.data);
-    } catch (error) {
-      if (error) {
-        setUser(null);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await refresh();
+        setUser(res.data.data);
+      } catch (error) {
+        if (error) {
+          setUser(null);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
     getUser();
-  }, []);
+  }, [setUser]);
 
   if (loading) {
     return (
