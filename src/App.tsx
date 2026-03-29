@@ -3,6 +3,7 @@ import ProtectedLayout from "./Layout/ProtectedLayout/ProtectedLayout";
 import AuthLayout from "./Layout/AuthLayout/AuthLayout";
 import Login from "./Routes/Login/Login";
 import Dashboard from "./Routes/Dashboard/Dashboard";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<Dashboard />} />
         </Route>
       </Routes>
+      <Toaster richColors position="top-center" />
     </BrowserRouter>
   );
 }
