@@ -1,3 +1,6 @@
+import { AppSidebar } from "@/components/AppSidebar";
+import { ModeToggle } from "@/components/ModeToggle";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { refresh } from "@/service/auth.service";
 import { useAuthState } from "@/store/AuthState";
@@ -33,12 +36,17 @@ export default function ProtectedLayout() {
   }
 
   if (!user) {
-    return <Navigate to="/auth/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (
-    <main>
-      <Outlet />
-    </main>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        <ModeToggle />
+        <Outlet />
+      </main>
+    </SidebarProvider>
   );
 }
