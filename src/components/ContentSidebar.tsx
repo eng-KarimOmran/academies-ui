@@ -23,7 +23,7 @@ export default function ContentSidebar() {
           <SidebarMenu>
             {links.map((link) => (
               <SidebarMenuItem key={link.title}>
-                <SidebarMenuButton tooltip={link.title} >
+                <SidebarMenuButton tooltip={link.title} asChild>
                   <Link to={link.path}>
                     <link.icon />
                     <span>{link.title}</span>

@@ -1,6 +1,8 @@
-import type { LoginDto } from "@/DTOs/auth.dto";
+import type { LoginDto } from "@/DTOs/auth.dto"
 import { axiosClient } from "@/lib/axios";
 
 export const login = (data: LoginDto) => axiosClient.post("/auth/login", data);
 
 export const refresh = () => axiosClient.get("/auth/refresh");
+
+export const logout = (allDevices:boolean) => axiosClient.post(`/auth/logout?allDevices=${allDevices}`);

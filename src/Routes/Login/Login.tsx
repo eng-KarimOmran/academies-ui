@@ -43,7 +43,7 @@ export default function Login() {
       navigate("/dashboard", { replace: true });
     } catch (error) {
       const err = error as ErrorAxios;
-      toast.error(err.response?.data.message);
+      toast.error(err.response?.data.message || "حدث خطأ غير متوقع");
     }
   };
 
