@@ -1,4 +1,4 @@
-import ErrorMessageForm from "@/components/ErrorMessageForm";
+import ErrorMessageForm from "@/components/Form/ErrorMessageForm";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {

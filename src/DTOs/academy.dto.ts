@@ -7,26 +7,16 @@ import {
   GetAcademySchema,
 } from "../validations/academy.validation";
 
-// 1. Create Academy DTO
-export type CreateAcademyDto = {
-  body: z.infer<typeof CreateAcademySchema.body>;
-};
+export type CreateAcademyDto = z.infer<typeof CreateAcademySchema>;
 
 // 2. Update Academy DTO
-export type UpdateAcademyDto = {
-  params: z.infer<typeof UpdateAcademySchema.params>;
-  body: z.infer<typeof UpdateAcademySchema.body>;
-};
+export type UpdateAcademyDto = z.infer<typeof UpdateAcademySchema>;
 
 // 3. Delete Academy DTO
-export type DeleteAcademyDto = {
-  params: z.infer<typeof DeleteAcademySchema.params>;
-};
+export type DeleteAcademyDto = z.infer<typeof DeleteAcademySchema>;
 
 // 4. Get All Academies DTO
-export type GetAllAcademiesDto = {
-  query: z.infer<typeof GetAllAcademiesSchema.query>;
-};
+export type GetAllAcademiesDto = z.infer<typeof GetAllAcademiesSchema>;
 
 // 5. Get Details Academy DTO
 export type GetAcademyDetailsDto = {

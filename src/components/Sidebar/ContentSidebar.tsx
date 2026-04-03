@@ -6,16 +6,16 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "./ui/sidebar";
+} from "../ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
 
 export default function ContentSidebar() {
-  const location = useLocation();
+  const currentPath = useLocation().pathname;
 
   const links = [
-    { path: "/dashboard/students", title: "الطلاب", icon: RiSchoolLine },
+    { path: "/dashboard/academies", title: "الأكاديميات", icon: RiSchoolLine },
   ];
-  console.log(location.pathname);
+
   return (
     <SidebarContent>
       <SidebarGroup>
@@ -23,7 +23,15 @@ export default function ContentSidebar() {
           <SidebarMenu>
             {links.map((link) => (
               <SidebarMenuItem key={link.title}>
-                <SidebarMenuButton tooltip={link.title} asChild>
+                <SidebarMenuButton
+                  className={
+                    link.path === currentPath
+                      ? "bg-sidebar-accent"
+                      : "bg-sidebar"
+                  }
+                  tooltip={link.title}
+                  asChild
+                >
                   <Link to={link.path}>
                     <link.icon />
                     <span>{link.title}</span>

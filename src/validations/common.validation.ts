@@ -98,9 +98,7 @@ export const expenseType = z.enum(ExpenseType);
 export const clientSource = z.enum(ClientSource);
 export const recordType = z.enum(RecordType);
 
-// --- Specialized Helpers ---
-
-export const boolean = z.coerce.boolean();
+export const boolean = z.boolean();
 
 export const plateNumber = z
   .string("Plate number is required")

@@ -8,7 +8,7 @@ export const LoginSchema = z.object({
 });
 
 export const LogoutSchema = z.object({
-  allDevices: boolean.default(false),
+  allDevices: boolean,
 });
 
 export const ChangePasswordSchema = z

@@ -1,15 +1,18 @@
-import { AppSidebar } from "@/components/AppSidebar";
-import { ModeToggle } from "@/components/ModeToggle";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/Sidebar/AppSidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { refresh } from "@/service/auth.service";
 import { useAuthState } from "@/store/AuthState";
 import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import NavTop from "@/components/NavTop/NavTop";
+import type { ErrorAxios } from "@/types/axios";
+import { toast } from "sonner";
 
 export default function ProtectedLayout() {
   const [loading, setLoading] = useState(true);
-  const { user, setUser } = useAuthState();
+  const { setUser, user } = useAuthState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -17,15 +20,15 @@ export default function ProtectedLayout() {
         const res = await refresh();
         setUser(res.data.data);
       } catch (error) {
-        if (error) {
-          setUser(null);
-        }
+        const err = error as ErrorAxios;
+        setUser(null);
+        toast.error(err.response?.data.message ?? "حدث خطأ غير متوقع");
       } finally {
         setLoading(false);
       }
     };
     getUser();
-  }, [setUser]);
+  }, [setUser, navigate]);
 
   if (loading) {
     return (
@@ -36,16 +39,17 @@ export default function ProtectedLayout() {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={"/login"} replace={true} />;
   }
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        <ModeToggle />
-        <Outlet />
+      <main className="w-full bg-background">
+        <NavTop />
+        <section className="p-2">
+          <Outlet />
+        </section>
       </main>
     </SidebarProvider>
   );

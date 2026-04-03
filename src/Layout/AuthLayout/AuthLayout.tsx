@@ -1,12 +1,15 @@
 import { Spinner } from "@/components/ui/spinner";
 import { refresh } from "@/service/auth.service";
 import { useAuthState } from "@/store/AuthState";
+import type { ErrorAxios } from "@/types/axios";
 import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet, useNavigate, Navigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function AuthLayout() {
   const [loading, setLoading] = useState(true);
-  const { user, setUser } = useAuthState();
+  const { setUser, user } = useAuthState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
@@ -14,15 +17,16 @@ export default function AuthLayout() {
         const res = await refresh();
         setUser(res.data.data);
       } catch (error) {
-        if (error) {
-          setUser(null);
-        }
+        const err = error as ErrorAxios;
+        setUser(null);
+        toast.error(err.response?.data.message ?? "حدث خطأ غير متوقع");
+        navigate("/login", { replace: true });
       } finally {
         setLoading(false);
       }
     };
     getUser();
-  }, [setUser]);
+  }, [setUser, navigate]);
 
   if (loading) {
     return (
@@ -33,7 +37,7 @@ export default function AuthLayout() {
   }
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to={"/dashboard"} replace={true} />;
   }
 
   return (
